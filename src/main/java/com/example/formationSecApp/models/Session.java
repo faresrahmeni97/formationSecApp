@@ -29,8 +29,18 @@ public class Session implements Serializable {
    @JoinColumn(name="organisme_id")
     private Organisme organisme;
 
+    @ManyToOne(optional = true)
+    @JoinColumn(name="formateur_id")
+    private Formateur formateur;
 
-   // @JsonIgnoreProperties("sessions")
+    public Formateur getFormateur() {
+        return formateur;
+    }
+
+    public void setFormateur(Formateur formateur) {
+        this.formateur = formateur;
+    }
+// @JsonIgnoreProperties("sessions")
     //private Formateur formateur;
 
     /*@ManyToMany(fetch= FetchType.EAGER)
@@ -51,7 +61,7 @@ public class Session implements Serializable {
         this.lieu = lieu;
         this.formation = formation;
         this.organisme = organisme;
-//      this.formateur = formateur;
+     this.formateur = formateur;
   //      this.participants = participants;
     }
 
@@ -111,15 +121,7 @@ public class Session implements Serializable {
         this.organisme = organisme;
     }
 
-   /* @ManyToOne(optional = false)
-    public Formateur getFormateur() {
-        return formateur;
-    }
-
-    public void setFormateur(Formateur formateur) {
-        this.formateur = formateur;
-    }
-
+   /*
     public Set<Participant> getParticipants() {
         return participants;
     }
