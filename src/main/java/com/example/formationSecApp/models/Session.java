@@ -1,8 +1,11 @@
 package com.example.formationSecApp.models;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,20 +21,24 @@ public class Session implements Serializable {
     private String lieu;
 
 
-   // @JsonIgnoreProperties("sessions")
-   @ManyToOne(optional = true)
-   @JoinColumn(name="formation_id")
+    // @JsonIgnoreProperties("sessions")
+    @ManyToOne(optional = true)
+    @JoinColumn(name="formation_id")
     private Formation formation;
 
 
-   // @JsonIgnoreProperties("sessions")
-   @ManyToOne(optional = true)
-   @JoinColumn(name="organisme_id")
+    // @JsonIgnoreProperties("sessions")
+    @ManyToOne(optional = true)
+    @JoinColumn(name="organisme_id")
     private Organisme organisme;
 
 
-   // @JsonIgnoreProperties("sessions")
-    //private Formateur formateur;
+
+
+    // @JsonIgnoreProperties("sessions")
+    @ManyToOne(optional = true)
+    @JoinColumn(name="formateur_id")
+    private Formateur formateur;
 
     /*@ManyToMany(fetch= FetchType.EAGER)
     @JoinTable(name = "SESSION_PARTICIPANT",
@@ -40,10 +47,10 @@ public class Session implements Serializable {
     private Set<Participant> participants = new HashSet<Participant>(); */
 
 
-    public Session(){
+    public Session()
+    {};
 
-    };
-        public Session(long id, Date date_deb, Date date_fin, long nbparticipant, String lieu, Formation formation, Organisme organisme, Formateur formateur, Set<Participant> participants) {
+    public Session(long id, Date date_deb, Date date_fin, long nbparticipant, String lieu, Formation formation, Organisme organisme, Formateur formateur, Set<Participant> participants) {
         this.id = id;
         this.date_deb = date_deb;
         this.date_fin = date_fin;
@@ -51,8 +58,8 @@ public class Session implements Serializable {
         this.lieu = lieu;
         this.formation = formation;
         this.organisme = organisme;
-//      this.formateur = formateur;
-  //      this.participants = participants;
+        /*this.formateur = formateur;
+        this.participants = participants;*/
     }
 
     public long getId() {
@@ -103,6 +110,8 @@ public class Session implements Serializable {
         this.formation = formation;
     }
 
+
+
     public Organisme getOrganisme() {
         return organisme;
     }
@@ -111,7 +120,7 @@ public class Session implements Serializable {
         this.organisme = organisme;
     }
 
-   /* @ManyToOne(optional = false)
+
     public Formateur getFormateur() {
         return formateur;
     }
@@ -120,7 +129,7 @@ public class Session implements Serializable {
         this.formateur = formateur;
     }
 
-    public Set<Participant> getParticipants() {
+    /*public Set<Participant> getParticipants() {
         return participants;
     }
 

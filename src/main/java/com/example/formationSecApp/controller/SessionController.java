@@ -1,8 +1,7 @@
 package com.example.formationSecApp.controller;
-
-
 import com.example.formationSecApp.models.Session;
 import com.example.formationSecApp.repositories.SessionRepository;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:4200")
 public class SessionController {
     private static final Logger logger = LogManager.getLogger(SessionController.class);
     @Autowired
@@ -41,7 +40,7 @@ public class SessionController {
     }
     @PutMapping("/updatesession/{id}")
     public Session updateSession(@PathVariable(value = "id") Long id,
-                           @Valid @RequestBody Session sessionUpdated) {
+                                 @Valid @RequestBody Session sessionUpdated) {
 
         //--- sans associations ---//
         Session session = sessionRep.findById(id).orElseThrow(null);
@@ -50,9 +49,9 @@ public class SessionController {
         session.setLieu(sessionUpdated.getLieu());
         session.setNbparticipant(sessionUpdated.getNbparticipant());
         //----- avec associations -----//
-        /*session.setFormateur(sessionUpdated.getFormateur());
+        session.setFormateur(sessionUpdated.getFormateur());
         session.setOrganisme(sessionUpdated.getOrganisme());
-        session.setParticipants(sessionUpdated.getParticipants());*/
+        /*session.setParticipants(sessionUpdated.getParticipants());*/
         session.setFormation(sessionUpdated.getFormation());
 
         Session updatedSession = sessionRep.save(session);
